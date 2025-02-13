@@ -22,7 +22,7 @@ This project implements a book management API with the following features:
 1. Clone the repository:
 ```bash
 git clone https://github.com/Noah-V/fastapi-book-project-noah.git
-cd fastapi-book-project
+cd fastapi-book-project-noah
 ```
 
 2. Set up a virtual environment:
