@@ -45,6 +45,7 @@ jobs:
             source venv/bin/activate
             pip install -r requirements.txt
             
+            sudo kill -9 $(sudo lsof -t -i:8000) || true
             sudo tee /etc/systemd/system/fastapi-books.service << EOF
             [Unit]
             Description=FastAPI Book Project
