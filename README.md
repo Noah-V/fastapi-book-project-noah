@@ -21,7 +21,7 @@ This project implements a book management API with the following features:
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/your-username/fastapi-book-project.git
+git clone https://github.com/Noah-V/fastapi-book-project-noah.git
 cd fastapi-book-project
 ```
 
