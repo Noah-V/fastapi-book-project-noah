@@ -70,5 +70,5 @@ The CD pipeline activates when changes are merged to main:
 5. Set up Nginx reverse proxy
 6. Enable HTTPS (optional but recommended)
 
-## Tech Stack
+## HNG Tech Stack
 [HNG Python Developers](https://hng.tech/hire/python-developers)
