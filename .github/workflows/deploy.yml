@@ -1,0 +1,51 @@
+name: CD Pipeline for HNG FastAPI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+        name: Checkout Code
+
+      - uses: actions/setup-python@v3
+        name: Set up python
+        with:
+          python-version: "3.10"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          sudo apt install git -y
+
+      - name: Deploy FastApi App
+        uses: appleboy/ssh-action@v0.1.7        
+        with:
+          host: ${{secrets.SERVER_IP}}
+          username: ubuntu
+          key: ${{secrets.SSH_PRIVATE_KEY}}
+          script: |
+            if [ ! -d "/home/ubuntu/fastapi-hng" ]; then
+              mkdir -p /home/ubuntu/fastapi-hng
+            fi 
+            cd /home/ubuntu/fastapi-hng
+            if [ ! -d ".git" ]; then
+              git clone https://github.com/Noah-V/fastapi-book-project-noah.git
+            else
+              git pull origin main
+            fi
+            cd fastapi-book-project-noah
+            sudo apt-get install -y python3-venv
+            python3 -m venv /home/ubuntu/fastapi-hng/fastapi-book-project-noah/venv
+            source venv/bin/activate
+            pip install -r requirements.txt
+            sudo nginx -t 
+            sudo systemctl stop nginx
+            sudo systemctl start nginx
+            uvicorn main:app --host 0.0.0.0 --port 8000 &
+
